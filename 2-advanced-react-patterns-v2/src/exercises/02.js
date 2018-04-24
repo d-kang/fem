@@ -4,6 +4,9 @@ import React from 'react'
 import {Switch} from '../switch'
 
 class Toggle extends React.Component {
+  static On = (props) => (props.on && props.children)
+  static Off = (props) => (!props.on && props.children)
+  static Button = ({on, toggle, ...other}) => <Switch on={on} onClick={toggle} {...other} />
   // you can create function components as static properties!
   // for example:
   // static Candy = (props) => <div>CANDY! {props.children}</div>
@@ -23,6 +26,7 @@ class Toggle extends React.Component {
       () => this.props.onToggle(this.state.on),
     )
   render() {
+    // console.log('this', this)
     // we're trying to let people render the components they want within the Toggle component.
     // But the On, Off, and Button components will need access to the internal `on` state as
     // well as the internal `toggle` function for them to work properly. So here we can
@@ -34,17 +38,24 @@ class Toggle extends React.Component {
     //
     // 🐨 you'll want to completely replace the code below with the above logic.
     const {on} = this.state
-    return <Switch on={on} onClick={this.toggle} />
+    // return <Switch on={on} onClick={this.toggle} />
+
+    return React.Children.map(this.props.children, child => {
+      return React.cloneElement(child, {
+        on,
+        toggle: this.toggle,
+      })
+    })
   }
 }
 
 // Don't make changes to the Usage component. It's here to show you how your
 // component is intended to be used and is used in the tests.
 // You can make all the tests pass by updating the Toggle component.
-function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
+function Usage({onToggle = (...args) => console.log('onToggle!', ...args)}) {
   return (
     <Toggle onToggle={onToggle}>
-      <Toggle.On>The button is on</Toggle.On>
+      <Toggle.On>The button is on!</Toggle.On>
       <Toggle.Off>The button is off</Toggle.Off>
       <Toggle.Button />
     </Toggle>
@@ -53,3 +64,4 @@ function Usage({onToggle = (...args) => console.log('onToggle', ...args)}) {
 Usage.title = 'Compound Components'
 
 export {Toggle, Usage as default}
+
