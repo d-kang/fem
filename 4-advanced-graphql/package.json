@@ -13,7 +13,7 @@
     "mongoose": "^5.0.15"
   },
   "scripts": {
-    "playground": "nodemon playground/server.js",
+    "playground": "nodemon playground/server",
     "dev": "nodemon src/server",
     "test": "NODE_ENV=testing jest --forceExit --runInBand"
   },
