@@ -3,9 +3,11 @@
 import React from 'react'
 import {Switch} from '../switch'
 
+
+
 class Toggle extends React.Component {
-  static On = (props) => (props.on && props.children)
-  static Off = (props) => (!props.on && props.children)
+  static On = (props) => (props.on ? props.children : null)
+  static Off = (props) => (!props.on ? props.children : null)
   static Button = ({on, toggle, ...other}) => <Switch on={on} onClick={toggle} {...other} />
   // you can create function components as static properties!
   // for example:
