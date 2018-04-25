@@ -1,0 +1,16 @@
+type Person {
+  name: String!
+}
+
+#input is a type that gets passed to a mutation
+input NewPersonInput {
+  name: String!
+}
+
+type Query {
+  onePerson(id: ID!): Person!
+}
+
+type Mutation {
+  newPerson(input: NewPersonInput!): Person!
+}
